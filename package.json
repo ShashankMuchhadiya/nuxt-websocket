@@ -1,0 +1,40 @@
+{
+	"name": "websocket",
+	"type": "module",
+	"private": true,
+	"engines": {
+		"node": "^20.19.0 || >=22.12.0",
+		"npm": ">=9.0.0"
+	},
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"ws:server": "tsx server/websocket.ts",
+		"dev:all": "concurrently \"npm run ws:server\" \"npm run dev\"",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"typecheck": "nuxt typecheck"
+	},
+	"dependencies": {
+		"@nuxt/eslint": "^1.9.0",
+		"@nuxt/ui": "^2.19.3",
+		"@nuxtjs/seo": "^3.2.2",
+		"nuxt": "^4.2.0",
+		"vue": "^3.5.22",
+		"vue-router": "^4.6.3",
+		"ws": "^8.18.0",
+		"eslint": "^9.37.0"
+	},
+	"devDependencies": {
+		"@types/ws": "^8.5.13",
+		"concurrently": "^9.1.0",
+		"tsx": "^4.19.2",
+		"typescript": "^5.9.3",
+		"vue-tsc": "^3.1.1",
+		"prettier": "^3.6.2",
+		"sonda": "^0.9.0"
+	}
+}

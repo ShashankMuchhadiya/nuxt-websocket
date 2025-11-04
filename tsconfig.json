@@ -1,0 +1,47 @@
+{
+	// https://nuxt.com/docs/guide/concepts/typescript
+	"files": [],
+	"references": [
+		{
+			"path": "./.nuxt/tsconfig.app.json"
+		},
+		{
+			"path": "./.nuxt/tsconfig.server.json"
+		},
+		{
+			"path": "./.nuxt/tsconfig.shared.json"
+		},
+		{
+			"path": "./.nuxt/tsconfig.node.json"
+		}
+	],
+	"compilerOptions": {
+		// Type Checking
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+
+		// Modules
+		"moduleResolution": "bundler",
+		"module": "ESNext",
+		"target": "ES2022",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+		// Emit
+		"noEmit": true,
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+
+		// Interop
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"verbatimModuleSyntax": false
+	}
+}
