@@ -71,7 +71,7 @@ export default defineNuxtConfig({
 	// CSS configuration
 	css: [],
 
-	// Security Headers
+	// Security Headers with CSP
 	routeRules: {
 		"/**": {
 			headers: {
@@ -79,6 +79,21 @@ export default defineNuxtConfig({
 				"X-Frame-Options": "DENY",
 				"X-XSS-Protection": "1; mode=block",
 				"Referrer-Policy": "strict-origin-when-cross-origin",
+				"Permissions-Policy": "geolocation=(), microphone=(), camera=(), interest-cohort=()",
+				"Content-Security-Policy": [
+					"default-src 'self'",
+					"script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval for Vue/Nuxt, unsafe-inline for hydration
+					"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com", // unsafe-inline for Tailwind, Google Fonts
+					"font-src 'self' https://fonts.gstatic.com data:",
+					"img-src 'self' data: https: blob:",
+					"connect-src 'self' ws://localhost:* wss://* ws://* https://*", // WebSocket and HTTPS connections
+					"media-src 'self'",
+					"object-src 'none'",
+					"base-uri 'self'",
+					"form-action 'self'",
+					"frame-ancestors 'none'",
+					"upgrade-insecure-requests", // Upgrade HTTP to HTTPS in production
+				].join("; "),
 			},
 		},
 	},

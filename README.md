@@ -10,7 +10,8 @@ A production-ready real-time messaging demo application built with **Nuxt 4**, *
 - ✅ **Prettier** - Automatic code formatting
 - ✅ **SEO Optimized** - Meta tags, Open Graph, Twitter Cards, and structured data (JSON-LD)
 - ✅ **Nuxt UI Components** - Beautiful, accessible UI components with Tailwind CSS
-- ✅ **Security Headers** - XSS protection, content type options, frame options, and more
+- ✅ **Security Headers** - XSS protection, content type options, frame options, CSP, and more
+- ✅ **Content Security Policy (CSP)** - Comprehensive CSP headers for enhanced security
 - ✅ **Performance Optimized** - Build optimizations, compression, and monitoring
 - ✅ **Semantic HTML** - Proper HTML5 semantic elements for accessibility
 - ✅ **Dark Mode Support** - Built-in dark mode theming
@@ -89,7 +90,19 @@ npm run dev
 ```
 websocket/
 ├── app/
-│   └── app.vue              # Main application component
+│   ├── app.vue              # Main application layout
+│   ├── components/           # Vue components
+│   │   ├── ConnectionHeader.vue
+│   │   ├── MessageList.vue
+│   │   ├── MessageInput.vue
+│   │   └── StatsCard.vue
+│   ├── composables/         # Composable functions
+│   │   └── useWebSocket.ts
+│   ├── pages/               # Page components
+│   │   └── index.vue
+│   └── assets/              # Assets (CSS, images, etc.)
+│       └── css/
+│           └── main.css
 ├── server/
 │   └── websocket.ts         # WebSocket server implementation
 ├── public/                  # Static assets (favicon, robots.txt, etc.)
@@ -99,6 +112,7 @@ websocket/
 ├── tsconfig.json           # TypeScript configuration
 ├── .eslintrc.cjs           # ESLint configuration
 ├── .prettierrc             # Prettier configuration
+├── vercel.json             # Vercel deployment configuration
 ├── .env.example            # Environment variables example
 └── package.json            # Dependencies and scripts
 ```
@@ -153,6 +167,8 @@ websocket/
 - ✅ **X-Frame-Options: DENY** - Prevents clickjacking attacks
 - ✅ **X-XSS-Protection: 1; mode=block** - XSS protection
 - ✅ **Referrer-Policy: strict-origin-when-cross-origin** - Privacy protection
+- ✅ **Content-Security-Policy** - Comprehensive CSP with WebSocket support
+- ✅ **Permissions-Policy** - Restricts access to browser features
 
 ### Performance
 
@@ -322,6 +338,79 @@ If ESLint shows errors:
 4. Follow Vue 3 composition API best practices
 5. Add proper type definitions
 
+## 🚀 Vercel Deployment
+
+### Prerequisites
+
+1. **Vercel Account** - Sign up at [vercel.com](https://vercel.com)
+2. **GitHub Repository** - Push your code to GitHub
+3. **WebSocket Server** - Deploy WebSocket server separately (Vercel doesn't support WebSocket servers)
+
+### Deployment Steps
+
+1. **Connect Repository to Vercel**:
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click "New Project"
+   - Import your GitHub repository
+
+2. **Configure Environment Variables**:
+
+   ```
+   APP_URL=https://your-app.vercel.app
+   WEBSOCKET_URL=wss://your-websocket-server.com
+   ```
+
+3. **Deploy**:
+   - Vercel will automatically detect Nuxt and deploy
+   - The `vercel.json` file is configured for optimal deployment
+
+4. **WebSocket Server**:
+   - Deploy WebSocket server separately (e.g., Railway, Render, or your own server)
+   - Update `WEBSOCKET_URL` environment variable with your WebSocket server URL
+   - Ensure the WebSocket server supports WSS (secure WebSocket) for production
+
+### Content Security Policy (CSP)
+
+The application includes comprehensive CSP headers configured in `nuxt.config.ts`:
+
+- **Script Sources**: Allows self, unsafe-inline (for Nuxt hydration), and unsafe-eval (for Vue)
+- **Style Sources**: Allows self, unsafe-inline (for Tailwind), and Google Fonts
+- **Connect Sources**: Allows WebSocket connections (ws://, wss://) and HTTPS
+- **Upgrade Insecure Requests**: Automatically upgrades HTTP to HTTPS in production
+
+**CSP Configuration**:
+
+```typescript
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com data:;
+  img-src 'self' data: https: blob:;
+  connect-src 'self' ws://localhost:* wss://* ws://* https://*;
+  upgrade-insecure-requests;
+```
+
+### Production Environment Variables
+
+For production on Vercel, set these environment variables:
+
+```env
+APP_URL=https://nuxt-websocket.vercel.app
+WEBSOCKET_URL=wss://your-websocket-server.com
+NODE_ENV=production
+```
+
+### WebSocket Server Deployment Options
+
+Since Vercel doesn't support WebSocket servers, deploy your WebSocket server separately:
+
+1. **Railway** - Easy deployment for Node.js servers
+2. **Render** - Free tier available for WebSocket servers
+3. **DigitalOcean App Platform** - Supports WebSocket connections
+4. **AWS/GCP/Azure** - Enterprise-grade solutions
+5. **Your Own Server** - Full control over infrastructure
+
 ## 📄 License
 
 This project is private and for demonstration purposes.
@@ -329,3 +418,5 @@ This project is private and for demonstration purposes.
 ---
 
 **Built with ❤️ using Nuxt 4 and modern web technologies**
+
+**Live Demo**: [https://nuxt-websocket.vercel.app/](https://nuxt-websocket.vercel.app/)
