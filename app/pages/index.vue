@@ -2,6 +2,12 @@
 	<main class="min-h-screen bg-gray-50 dark:bg-gray-900">
 		<UContainer class="py-8">
 			<div class="max-w-4xl mx-auto">
+				<div class="mb-4 flex justify-end">
+					<UButton to="/lodash" color="primary" variant="soft" icon="i-heroicons-academic-cap">
+						Lodash Demo
+					</UButton>
+				</div>
+
 				<ConnectionHeader
 					:connection-status="connectionStatus"
 					@connect="connect"
